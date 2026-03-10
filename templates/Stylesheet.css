@@ -1,0 +1,59 @@
+@font-face {
+    font-family: "Skyrim_Font";
+    src: url("./fonts/Balgruf-JRye7.ttf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+.skyrim_image {
+    display: block;
+    margin: auto; 
+    width : 400px;
+    height: auto;
+}
+.menu main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Skyrim_Font',Times, serif;
+}
+.quote {
+    font-size: 40px;
+    margin-top: -20px;
+}
+html {
+    background-color: #313a32;
+}
+.wdyn {
+    font-weight: normal;
+}
+#itembutton {
+    background-color: #a9a7c0;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+#storagebutton {
+    background-color: #585f75;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+#questlinebutton {
+    background-color: #476f8e;
+    font-size: 20px;
+}
+#loginbutton {
+    background-color: #bee9f2;
+    font-size: 18px;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 100;
+}
+#itembutton, #storagebutton, #questlinebutton, #loginbutton {
+    height: 60px;
+    width: 140px;
+    font-family:'Skyrim_Font', Tahoma, Verdana, sans-serif;
+    text-align: center;
+    border-radius: 30%;
+    cursor: pointer;
+}
