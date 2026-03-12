@@ -57,3 +57,11 @@ html {
     border-radius: 30%;
     cursor: pointer;
 }
+.items-h1 {
+    font-family:'Skyrim_Font', Tahoma, Verdana, sans-serif;
+    text-align: center;
+    text-shadow: white
+}
+#collected-button {
+    padding-left: 20px;
+}
