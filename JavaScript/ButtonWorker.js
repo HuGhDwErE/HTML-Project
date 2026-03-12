@@ -1,27 +1,27 @@
 // item button
 const itembutton = document.getElementById("itembutton")
 function handleItemClick() {
-    alert("item button was clicked")
+    window.location.href = "item_page.html"
 }
 itembutton.addEventListener("click", handleItemClick);
 
 // storage button
 const storagebutton = document.getElementById("storagebutton")
 function handleStorageClick() {
-    alert("storage button was clicked")
+    window.location.href = "storage_page.html"
 }
 storagebutton.addEventListener("click", handleStorageClick);
 
 // questline button
 const questlinebutton = document.getElementById("questlinebutton")
 function handleQuestlineClick() {
-    alert("questline button was clicked")
+    window.location.href = "questline_page.html"
 }
 questlinebutton.addEventListener("click", handleQuestlineClick)
 
 // login button
 const loginbutton = document.getElementById("loginbutton")
 function handleLoginClick() {
-    alert("Login button was clicked")
+    window.location.href = "login_page"
 }
 loginbutton.addEventListener("click", handleLoginClick)
