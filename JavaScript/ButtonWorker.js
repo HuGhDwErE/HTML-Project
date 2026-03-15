@@ -22,6 +22,6 @@ questlinebutton.addEventListener("click", handleQuestlineClick)
 // login button
 const loginbutton = document.getElementById("loginbutton")
 function handleLoginClick() {
-    window.location.href = "login_page"
+    window.location.href = "login_page.html"
 }
 loginbutton.addEventListener("click", handleLoginClick)
