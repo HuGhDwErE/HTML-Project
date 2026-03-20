@@ -5,42 +5,53 @@
     font-style: normal;
     font-display: swap;
 }
+
+@import url("https://fonts.googleapis.com/css2?family=poppins:wght@300;400;500;600;700;800;900&display=swap");
+
 .skyrim_image {
     display: block;
     margin: auto; 
     width : 400px;
     height: auto;
 }
+
 .menu main {
     display: flex;
     flex-direction: column;
     align-items: center;
     font-family: 'Skyrim_Font',Times, serif;
 }
+
 .quote {
     font-size: 40px;
     margin-top: -20px;
 }
+
 html {
     background-color: #313a32;
 }
+
 .wdyn {
     font-weight: normal;
 }
+
 #itembutton {
     background-color: #a9a7c0;
     font-size: 20px;
     margin-bottom: 20px;
 }
+
 #storagebutton {
     background-color: #585f75;
     font-size: 20px;
     margin-bottom: 20px;
 }
+
 #questlinebutton {
     background-color: #476f8e;
     font-size: 20px;
 }
+
 #loginbutton {
     background-color: #bee9f2;
     font-size: 18px;
@@ -49,7 +60,8 @@ html {
     right: 10px;
     z-index: 100;
 }
-#itembutton, #storagebutton, #questlinebutton, #loginbutton {
+
+#itembutton, #storagebutton, #questlinebutton {
     height: 60px;
     width: 140px;
     font-family:'Skyrim_Font', Tahoma, Verdana, sans-serif;
@@ -57,11 +69,121 @@ html {
     border-radius: 30%;
     cursor: pointer;
 }
+
 .items-h1 {
     font-family:'Skyrim_Font', Tahoma, Verdana, sans-serif;
     text-align: center;
     text-shadow: white
 }
+
 #collected-button {
     padding-left: 20px;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Skyrim_Font', "Poppins", sans-serif ;
+}
+
+#body {
+display: flex;
+justify-content: center;
+align-items: center;
+min-height: 100vh;
+background: seagreen;
+}
+
+.wrapper {
+    width: 420px;
+    background: purple;
+    color: #fff;
+    border-radius: 10px;
+    padding: 30px 40px;  
+}
+
+.wrapper h1 {
+    font-size: 36px;
+    text-align: center;
+}
+
+.wrapper, .input-box {
+    width: 50px;
+    height: 50px;
+    background: salmon;
+    margin: 30px 0;
+}
+
+.input-box input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(255, 255, 255, .2 );
+    font-size: 16px;
+    color: #fff;
+    padding: 20px 45px 20px 20px;
+}
+
+.input-box input::placeholder{
+    color: #fff;
+}
+
+.input-box i {
+    position: absolute;
+    right: 20px;
+    top: 50px;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
+
+.wrapper .remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14.5px;
+    margin: -15px 0 15px;
+}
+
+.remember-forgot label input {
+    accent-color: #fff;
+    margin-right: 3px;
+}
+.remember-forgot a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.remember-forgot a:hover {
+    text-decoration: underline;
+}
+.wrapper .btn {
+    width: 100%;
+    height: 45px;
+    background: #fff;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+}
+
+.wrapper .register-link {
+    font-size: 14.5px;
+    text-align: center;
+    margin: 20px 0 15px;
+}
+
+.register-link p a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.register-link p a:hover {
+    text-decoration: underline;
 }
