@@ -5,19 +5,59 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0" />
         <link href="../Stylesheet.css" rel="stylesheet" />
-        <link rel="icon" type="image/x-icon" href ="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcgzo1WK8N1PcYh0JstIFeZxyuiH1sX6LHug&s" />
+        <link rel="icon" type="image/x-icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcgzo1WK8N1PcYh0JstIFeZxyuiH1sX6LHug&s" />
 
         <title>ITEMS</title>
     </head>
-    <body>
-        <div class="menu"></div>
-            <main>
-                <h1 class="items-h1">Items</h1>
-                <dl>
-                    <dt><i>The Wabbajack</i></dt>
-                    <dd>Acquired after completeing the quest <strong>The Mind Of Madness</strong></dd>
-                    <button id="collected-button">Collected</button>
-                </dl>
-            </main>
+    <body id="body">
+        <div class="wrapper">
+            <div class="menu">
+                <main>
+                    <h1 class="items-h1">Items</h1>
+
+                    <div class="item-card">
+                        <h2 class="item-name"><i>The Wabbajack</i></h2>
+                        <p class="item-description">
+                            Acquired after completing the quest <strong>The Mind Of Madness</strong>
+                        </p>
+                        <button class="collected-button">Not Collected </button>
+                    </div>
+
+                    <div class="item-card">
+                        <h2 class="item-name"><i>Dawnbreaker</i></h2>
+                        <p class="item-description">
+                            Acquired after completing the quest <strong>The Break of Dawn</strong>
+                        </p>
+                        <button class="collected-button">Not Collected </button>
+                    </div>
+
+                    <div class="item-card">
+                        <h2 class="item-name"><i>Mehrunes' Razor</i></h2>
+                        <p class="item-description">
+                            Acquired after completing the quest <strong>Pieces of the Past</strong>
+                        </p>
+                        <button class="collected-button">Not Collected </button>
+                    </div>
+
+                    <div class="item-card">
+                        <h2 class="item-name"><i>Ebony Mail</i></h2>
+                        <p class="item-description">
+                            Acquired after completing the quest <strong>Boethiah's Calling</strong>
+                        </p>
+                        <button class="collected-button">Not Collected </button>
+                    </div>
+
+                    <div class="item-card">
+                        <h2 class="item-name"><i>Volendrung</i></h2>
+                        <p class="item-description">
+                            Acquired after completing the quest <strong>The Cursed Tribe</strong>
+                        </p>
+                        <button class="collected-button">Not Collected </button>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <script src="../JavaScript/ButtonWorker.js"></script>
     </body>
 </html>
