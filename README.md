@@ -4,4 +4,4 @@ then click live server at the bottom right of your screen
 
 congratulations the webpage should be running
 
-(some of images may not work as they are downloaded locally on my pc. If this occurs feel free to download your own image and replace it into the respectecive location. 
+(some of images may not work as they are downloaded locally on my pc. If this occurs feel free to download your own image and replace it into the respectecive location.) 
