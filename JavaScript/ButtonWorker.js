@@ -183,3 +183,23 @@ if (welcomeText) {
         welcomeText.textContent = "You are not logged in.";
     }
 }
+
+async function searchItems() {
+    const query = document.getElementById("searchInput").value;
+
+    const response = await fetch('/search?q=${encodeURIComponent(query)}');
+    const items = await response.json();
+
+    const resultsDiv = document.getElementById("searchResults");
+    resultsDiv.innerHTML = "";
+
+    items.forEach(item => {
+        resultsDiv.innerHTML += `
+            <div class="item_card">
+                <h3>${item.name}</h3>
+                <p>${item.description}</p>
+                <small>Match Score: ${item.score.toFixed(2)}</small>
+            </div>
+        `;
+    });
+}
