@@ -187,7 +187,7 @@ if (welcomeText) {
 async function searchItems() {
     const query = document.getElementById("searchInput").value;
 
-    const response = await fetch('/search?q=${encodeURIComponent(query)}');
+    const response = await fetch(`/search?q=${encodeURIComponent(query)}`);
     const items = await response.json();
 
     const resultsDiv = document.getElementById("searchResults");
@@ -195,11 +195,23 @@ async function searchItems() {
 
     items.forEach(item => {
         resultsDiv.innerHTML += `
-            <div class="item_card">
-                <h3>${item.name}</h3>
-                <p>${item.description}</p>
+            <div class="item-card">
+                <h3>${item.item_name}</h3>
+                <p><strong>Type:</strong> ${item.type}</p>
+                <p><strong>Effect:</strong> ${item.effect}</p>
+                <p><strong>Quest:</strong> ${item.quest}</p>
+                <p><strong>Location:</strong> ${item.location}</p>
                 <small>Match Score: ${item.score.toFixed(2)}</small>
             </div>
         `;
     });
+}
+
+function recommendBuild(buildType) {
+    const searchInput = document.getElementById("searchInput");
+
+    if (searchInput) {
+        searchInput.value = buildType;
+        searchItems();
+    }
 }

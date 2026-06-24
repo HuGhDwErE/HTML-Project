@@ -1,4 +1,4 @@
-from flask import Flask, Request, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request
 from app.config.config import get_config_by_name
 from app.initialize_functions import initialize_route, initialize_db, initialize_swagger
 import pandas as pd
@@ -8,27 +8,19 @@ from sklearn.metrics.pairwise import cosine_similarity
 def create_app(config=None) -> Flask:
 
     app = Flask(__name__)
-    data ={
-        "item_name": [
-            "daedric Boots of fire suppression",
-            "Ebony Armor of Peerless Destruction:",
-            "Ring of Eminent Fortify Magicka:",
-            "Iron Sword of Burning",
-            "Glass Shield of Grounding",
-        ],
-        "description": [
-            "Increases fire resistance by 50%. Heavy Armor boots.",
-            "Destruction Spells cost 20% less magicka. Heavy Armor chestplate.",
-            "Increases magicka by 40 points. Jewelry.",
-            "Adds 10 points of fire damage. One-handed weapon.",
-            "Reduces shock damage by 40%. Light Armor shield.",
-        ]
-    }
 
-    df = pd.DataFrame(data)
+    df = pd.read_csv("app/data/skyrim_items.csv")
 
     model = SentenceTransformer('all-MiniLM-L6-v2')
-    item_texts = df['item_name'] + "" + df['description']
+    item_texts = (
+        "Item: " + df["item_name"] +
+        " Category: " + df["category"] +
+        " Type: " + df["type"] +
+        " Effect: " + df["effect"] +
+        " Quest: " + df["quest"] +
+        " Location: " + df["location"] +
+        " Tags: " + df["tags"]
+    )
     item_embeddings = model.encode(item_texts.tolist())
 
     @app.route("/")
@@ -60,7 +52,7 @@ def create_app(config=None) -> Flask:
 
         df['score'] = scores
         results = df.sort_values('score', ascending=False).head(5)
-        return jsonify(results[["item_name", "description", "score"]].to_dict(orient="records"))
+        return jsonify(results[["item_name", "category", "type", "effect", "quest", "location", "tags", "score"]].to_dict(orient="records"))
     
     if config:
         app.config.from_object(get_config_by_name(config))

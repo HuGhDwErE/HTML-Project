@@ -1,0 +1,30 @@
+item_name,category,type,effect,quest,location,tags
+
+Dawnbreaker,weapon,one handed sword,Burns undead and may explode them,The Break of Dawn,Kilkreath Temple,fire undead meridia daedric artifact
+The Wabbajack,staff,daedric staff,Random magical effects,The Mind of Madness,Pelagius Wing,sheogorath madness magic
+Mehrunes Razor,weapon,dagger,Small chance to instantly kill,Pieces of the Past,Shrine of Mehrunes Dagon,assassin instant kill dagger
+Dragonbane,weapon,katana,Deals extra damage to dragons,Alduin's Wall,Sky Haven Temple,dragon sword blade
+Ebony Mail,armor,heavy armor,Poison cloak while sneaking,Boethiah's Calling,Sacellum of Boethiah,stealth poison heavy armor
+Nightingale Armor,armor,light armor,Improves stealth abilities,Trinity Restored,Nightingale Hall,stealth thief armor
+Konahrik,dragon priest mask,headgear,Heals wearer in danger,Collect all dragon priest masks,Bromjunaar Sanctuary,dragon priest mask mage
+Volsung,dragon priest mask,headgear,Improves prices and carrying capacity,Volsung's Tomb,Volskygge,merchant dragon priest
+Azuras Star,daedric artifact,soul gem,Reusable soul gem,The Black Star,Shrine of Azura,mage soul gem
+Black Star,daedric artifact,soul gem,Reusable black soul gem,The Black Star,Shrine of Azura,mage soul gem necromancer
+Aetherial Crown,dwarven artifact,headgear,Stores an additional standing stone power,Lost to the Ages,Arkngthamz,dwemer standing stone artifact
+Aetherial Shield,dwarven artifact,shield,Turns enemies ethereal when bashed,Lost to the Ages,Arkngthamz,dwemer shield defense
+Aetherial Staff,dwarven artifact,staff,Summons dwarven spider or sphere allies,Lost to the Ages,Arkngthamz,dwemer staff summon
+Chillrend,weapon,glass sword,Deals frost damage and may paralyze,The Pursuit,Mercer Freys House,frost thief sword
+Blade of Woe,weapon,dagger,Absorbs health from enemies,Dark Brotherhood questline,Dark Brotherhood Sanctuary,assassin dagger stealth health
+Mace of Molag Bal,weapon,mace,Drains stamina and magicka and soul traps,The House of Horrors,Abandoned House,daedric mace soul trap vampire
+Sanguine Rose,staff,daedric staff,Summons a Dremora warrior,A Night to Remember,Morvunskar,summon daedra staff
+Spellbreaker,shield,heavy shield,Creates a ward against magic,The Only Cure,Peryites Shrine,magic defense shield
+Masque of Clavicus Vile,headgear,helmet,Improves speech prices and magicka regeneration,A Daedras Best Friend,Haemars Shame,merchant speech daedric
+Oghma Infinium,book,artifact,Grants permanent skill bonuses,Discerning the Transmundane,Septimus Signus Outpost,knowledge skills book
+Staff of Magnus,staff,artifact,Absorbs magicka and health,The Staff of Magnus,Labyrinthian,mage college staff
+Gauldur Amulet,amulet,jewelry,Increases health magicka and stamina,Forbidden Legend,Saarthal,legendary necklace
+Wuuthrad,weapon,battleaxe,Deals extra damage to elves,Glory of the Dead,Jorrvaskr,companions axe elf
+Nightingale Blade,weapon,sword,Absorbs health and stamina,Hard Answers,Nightingale Hall,thief sword stamina
+Auriels Bow,weapon,bow,Deals sun damage especially against undead,Dawnguard,Snow Elf Temple,bow vampire sun undead
+Zephyr,weapon,bow,Fires faster than normal bows,Lost to the Ages,Arkngthamz,dwemer bow fast
+Bloodskal Blade,weapon,greatsword,Shoots energy waves,The Final Descent,Bloodskal Barrow,energy sword two handed
+The Longhammer,weapon,warhammer,Swings faster than normal warhammers,Unmarked,Liar's Retreat,orc hammer fast

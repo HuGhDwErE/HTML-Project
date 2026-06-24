@@ -11,6 +11,18 @@
         <div class="wrapper">
             <div class="menu">
                 <main>
+                    <class="search_box">
+                        <input 
+                        type ="text"
+                        id="searchInput"
+                        placeholder="Search for an item, effect, or weapon type..."
+                        />
+                        <button onclick="searchItems()">Search</button>
+                    </div>
+
+                    <div id="searchResults"></div>
+
+                    </class>
                     <h1 class="items-h1">Items</h1>
 
                     <div class="item-card">
@@ -52,15 +64,41 @@
                         </p>
                         <button class="collected-button" data-item="Volendrung">Not Collected </button>
                     </div>
-                    <div>
-                        <input type="text" id="searchInput" placeholder="Search for items..." />
-                        <button onclick="searchItems()">Search</button>
+                    <select id="categoryFilter">
+
+                        <option value="">All Categories</option>
+
+                        <option value="weapon">Weapons</option>
+
+                        <option value="armor">Armor</option>
+
+                        <option value="staff">Staffs</option>
+
+                        <option value="shield">Shields</option>
+
+                        <option value="headgear">Headgear</option>
+
+                        <option value="daedric artifact">Daedric Artifacts</option>
+
+                    </select>
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Search for an item, effect...">
+                        <button id="searchButton" onclick="searchItems()">Search</button>
                     </div>
+
+                    <div class="recommendation-box">
+                        <button onclick="recommendBuild('dragon hunter')">Dragon Hunter</button>
+                        <button onclick="recommendBuild('stealth assassin')">Stealth Assassin</button>
+                        <button onclick="recommendBuild('mage')">Mage</button>
+                        <button onclick="recommendBuild('anti undead')">Anti-Undead</button>
+                        <button onclick="recommendBuild('heavy warrior')">Heavy Warrior</button>
+                    </div>
+
                     <div id="searchResults"></div>
+                    </div>
+                    </div>
                 </main>
             </div>
         </div>
-
-        <script src="../JavaScript/ButtonWorker.js"></script>
     </body>
 </html>
