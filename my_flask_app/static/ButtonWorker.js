@@ -1,7 +1,7 @@
 // item button
 const itembutton = document.getElementById("itembutton");
 function handleItemClick() {
-    window.location.href = "item_page.html";
+    window.location.href = "/items";
 }
 if (itembutton) {
     itembutton.addEventListener("click", handleItemClick);
@@ -10,7 +10,7 @@ if (itembutton) {
 // storage button
 const storagebutton = document.getElementById("storagebutton");
 function handleStorageClick() {
-    window.location.href = "storage_page.html";
+    window.location.href = "/storage";
 }
 if (storagebutton) {
     storagebutton.addEventListener("click", handleStorageClick);
@@ -19,7 +19,7 @@ if (storagebutton) {
 // questline button
 const questlinebutton = document.getElementById("questlinebutton");
 function handleQuestlineClick() {
-    window.location.href = "questline_page.html";
+    window.location.href = "/questlines";
 }
 if (questlinebutton) {
     questlinebutton.addEventListener("click", handleQuestlineClick);
@@ -28,7 +28,7 @@ if (questlinebutton) {
 // login button
 const loginbutton = document.getElementById("loginbutton");
 function handleLoginClick() {
-    window.location.href = "login_page.html";
+    window.location.href = "/login";
 }
 if (loginbutton) {
     loginbutton.addEventListener("click", handleLoginClick);

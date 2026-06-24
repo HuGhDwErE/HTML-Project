@@ -4,7 +4,8 @@
         <!--Linking everything for the Login page-->
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-        <link href="../Stylesheet.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='Stylesheet.css') }}" />
+        <script defer src="{{ url_for('static', filename='ButtonWorker.js') }}"></script>
         <link rel="icon" type="image/x-icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcgzo1WK8N1PcYh0JstIFeZxyuiH1sX6LHug&s" />
         <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
         <title>Login</title>
@@ -36,6 +37,6 @@
             </form>
         </div>
 
-        <script src="../JavaScript/ButtonWorker.js"></script>
+        <script src="{{ url_for('static', filename='js/ButtonWorker.js') }}"></script>
     </body>
 </html>

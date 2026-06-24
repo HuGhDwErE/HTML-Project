@@ -33,7 +33,23 @@ def create_app(config=None) -> Flask:
 
     @app.route("/")
     def home():
+        return render_template("Html_project.html")
+
+    @app.route("/items")
+    def items():
         return render_template("item_page.html")
+
+    @app.route("/storage")
+    def storage():
+        return render_template("storage_page.html")
+
+    @app.route("/questlines")
+    def questlines():
+        return render_template("questline_page.html")
+
+    @app.route("/login")
+    def login():
+        return render_template("login_page.html")
    
     @app.route("/search")
     def search():
