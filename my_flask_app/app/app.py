@@ -37,7 +37,7 @@ def create_app(config=None) -> Flask:
    
     @app.route("/search")
     def search():
-        query = Request.args.get("q", "")
+        query = request.args.get("q", "")
 
         query_embedding = model.encode([query])
         scores = cosine_similarity(query_embedding, item_embeddings)[0]
@@ -45,10 +45,6 @@ def create_app(config=None) -> Flask:
         df['score'] = scores
         results = df.sort_values('score', ascending=False).head(5)
         return jsonify(results[["item_name", "description", "score"]].to_dict(orient="records"))
-    
-    if __name__ == "__main__":
-        app.run(debug=True)
-
     
     if config:
         app.config.from_object(get_config_by_name(config))
