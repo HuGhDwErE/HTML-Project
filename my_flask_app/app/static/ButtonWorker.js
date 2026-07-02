@@ -199,12 +199,15 @@ async function searchItems() {
                 <img class="item-image" src="/static/images/${item.image}" alt="${item.item_name}">
                 <h3>${item.item_name}</h3>
                 <p><strong>Category:</strong> ${item.category}</p>
-                <p><strong>Type:</strong> ${item.type}</p>
+                <p><strong>Type:</strong> ${item.item_type}</p>
                 <p><strong>Rarity:</strong> ${item.rarity}</p>
                 <p><strong>Effect:</strong> ${item.effect}</p>
                 <p><strong>Quest:</strong> ${item.quest}</p>
                 <p><strong>Location:</strong> ${item.location}</p>
                 <p><strong>DLC:</strong> ${item.dlc}</p>
+                <p><strong>Weight:</strong> ${item.item_weight}</p>
+                <p><strong>Value:</strong> ${item.item_value}</p>
+                <p><strong>Tags:</strong> ${item.tags}</p>
                 <small>Match Score: ${item.score.toFixed(2)}</small>
             </div>
         `;

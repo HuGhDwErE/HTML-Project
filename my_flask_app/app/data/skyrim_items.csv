@@ -1,3 +1,17 @@
-item_id,item_name,category,type,rarity,effect,quest,location,dlc,weight,value,image,tags
+item_id,item_name,category,item_type,rarity,effect,quest,location,dlc,item_weight,item_value,image,tags
 
-000240D2,Dawnbreaker,Daedric Artifact,One-Handed Sword,Legendary,Burns undead and may cause explosions,The Break of Dawn,Kilkreath Temple,Base Game,10,740,artifacts/dawnbreaker.png,"fire, undead, meridia, sword, daedric artifact"
+1,Dawnbreaker,Weapon,One Handed Sword,Daedric Artifact,Burns undead and may explode them,The Break of Dawn,Kilkreath Temple,Base Game,10,740,artifacts/dawnbreaker.png,"fire undead meridia sword"
+2,Dragonbane,Weapon,Katana,Unique,Extra damage to dragons,Alduin's Wall,Sky Haven Temple,Base Game,10,740,weapons/dragonbane.png,"dragon katana blade"
+3,Mehrunes Razor,Weapon,Dagger,Daedric Artifact,Small chance to instantly kill,Pieces of the Past,Shrine of Mehrunes Dagon,Base Game,3,860,artifacts/mehrunes_razor.png,"dagger assassin instant kill"
+4,Chillrend,Weapon,Sword,Unique,Frost damage and paralysis,The Pursuit,Mercer Frey's House,Base Game,15,1442,weapons/chillrend.png,"ice frost sword thief"
+5,Nightingale Blade,Weapon,Sword,Unique,Absorbs health and stamina,Hard Answers,Nightingale Hall,Base Game,15,704,weapons/nightingale_blade.png,"nightingale thief sword"
+6,Windshear,Weapon,Sword,Unique,Staggers enemies,Hail Sithis!,The Katariah,Base Game,10,1500,weapons/windshear.png,"pirate stagger sword"
+7,Blade of Woe,Weapon,Dagger,Unique,Absorbs health,Death Incarnate,Dark Brotherhood Sanctuary,Base Game,7,880,weapons/blade_of_woe.png,"dark brotherhood assassin dagger"
+8,Volendrung,Weapon,Warhammer,Daedric Artifact,Absorbs stamina,The Cursed Tribe,Largashbur,Base Game,26,1843,artifacts/volendrung.png,"orc hammer stamina"
+9,Ebony Blade,Weapon,Two Handed Sword,Daedric Artifact,Grows stronger after betrayals,The Whispering Door,Dragonsreach,Base Game,28,2000,artifacts/ebony_blade.png,"mephala katana life steal"
+10,Rueful Axe,Weapon,Battleaxe,Daedric Artifact,Stamina damage,A Daedra's Best Friend,Haemar's Shame,Base Game,22,1500,artifacts/rueful_axe.png,"axe clavicus vile"
+11,Wuuthrad,Weapon,Battleaxe,Legendary,Extra damage to elves,Glory of the Dead,Jorrvaskr,Base Game,25,2000,weapons/wuuthrad.png,"companions axe elf"
+12,Bloodskal Blade,Weapon,Greatsword,Unique,Energy wave attack,The Final Descent,Bloodskal Barrow,Dragonborn,16,1400,weapons/bloodskal_blade.png,"energy greatsword solstheim"
+13,Ghostblade,Weapon,Sword,Unique,Ignores armor,Lost Legends,Folgunthur,Base Game,8,300,weapons/ghostblade.png,"ethereal sword"
+14,Eduj,Weapon,Sword,Unique,Frost enchantment,Hilt and Handle,Volunruud,Base Game,11,600,weapons/eduj.png,"ancient nord sword frost"
+15,Okin,Weapon,War Axe,Unique,Frost enchantment,Hilt and Handle,Volunruud,Base Game,12,800,weapons/okin.png,"ancient nord axe frost"

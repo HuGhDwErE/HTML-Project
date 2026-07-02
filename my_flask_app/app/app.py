@@ -12,19 +12,19 @@ def create_app(config=None) -> Flask:
     df = pd.read_csv("app/data/skyrim_items.csv")
 
     model = SentenceTransformer('all-MiniLM-L6-v2')
+
     item_texts = (
-        "Item: " + df["item_name"].astype(str) +
-        " Category: " + df["category"].astype(str) +
-        " Type: " + df["type"].astype(str) +
-        " Rarity: " + df["rarity"].astype(str) +
-        " Effect: " + df["effect"].astype(str) +
-        " Quest: " + df["quest"].astype(str) +
-        " Location: " + df["location"].astype(str) +
-        " DLC: " + df["dlc"].astype(str) +
-        " Weight: " + df["weight"].astype(str) +
-        " Value: " + df["value"].astype(str) +
-        " Tags: " + df["tags"].astype(str)
-        )
+        df["item_name"].astype(str) + " " +
+        df["category"].astype(str) + " " +
+        df["item_type"].astype(str) + " " +
+        df["rarity"].astype(str) + " " +
+        df["effect"].astype(str) + " " +
+        df["quest"].astype(str) + " " +
+        df["location"].astype(str) + " " +
+        df["dlc"].astype(str) + " " +
+        df["tags"].astype(str)
+)
+    
     item_embeddings = model.encode(item_texts.tolist())
 
     @app.route("/")
@@ -56,22 +56,25 @@ def create_app(config=None) -> Flask:
 
         df['score'] = scores
         results = df.sort_values('score', ascending=False).head(5)
-        return jsonify(results[[
-            "item_id",
-            "item_name",
-            "category",
-            "type",
-            "rarity",
-            "effect",
-            "quest",
-            "location",
-            "dlc",
-            "weight",
-            "value",
-            "image",
-            "tags",
-            "score"
-        ]].to_dict(orient="records"))
+        return jsonify(
+            results[
+                [
+                    "item_name",
+                    "category",
+                    "item_type",
+                    "rarity",
+                    "effect",
+                    "quest",
+                    "location",
+                    "dlc",
+                    "item_weight",
+                    "item_value",
+                    "image",
+                    "tags",
+                    "score"
+                ]
+            ].to_dict(orient="records")
+        )
     
     if config:
         app.config.from_object(get_config_by_name(config))
