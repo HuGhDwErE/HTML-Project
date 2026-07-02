@@ -1,3 +1,3 @@
-item_id, item_name, category, type, rarity, effect, quest, location, dlc, weight, value, image, tags
+item_id,item_name,category,type,rarity,effect,quest,location,dlc,weight,value,image,tags
 
 000240D2,Dawnbreaker,Daedric Artifact,One-Handed Sword,Legendary,Burns undead and may cause explosions,The Break of Dawn,Kilkreath Temple,Base Game,10,740,artifacts/dawnbreaker.png,"fire, undead, meridia, sword, daedric artifact"
