@@ -12,6 +12,9 @@ def create_app(config=None) -> Flask:
     df = pd.read_csv("app/data/skyrim_items.csv")
     df.columns = df.columns.str.strip()
 
+    df["item_weight"] = df["item_weight"].fillna("Unknown").astype(str)
+    df["item_value"] = df["item_value"].fillna("Unknown").astype(str)
+
     model = SentenceTransformer('all-MiniLM-L6-v2')
 
     item_texts = (
