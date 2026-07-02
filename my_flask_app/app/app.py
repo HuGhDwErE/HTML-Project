@@ -10,6 +10,7 @@ def create_app(config=None) -> Flask:
     app = Flask(__name__)
 
     df = pd.read_csv("app/data/skyrim_items.csv")
+    df.columns = df.columns.str.strip()
 
     model = SentenceTransformer('all-MiniLM-L6-v2')
 
