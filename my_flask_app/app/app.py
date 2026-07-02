@@ -13,14 +13,18 @@ def create_app(config=None) -> Flask:
 
     model = SentenceTransformer('all-MiniLM-L6-v2')
     item_texts = (
-        "Item: " + df["item_name"] +
-        " Category: " + df["category"] +
-        " Type: " + df["type"] +
-        " Effect: " + df["effect"] +
-        " Quest: " + df["quest"] +
-        " Location: " + df["location"] +
-        " Tags: " + df["tags"]
-    )
+        "Item: " + df["item_name"].astype(str) +
+        " Category: " + df["category"].astype(str) +
+        " Type: " + df["type"].astype(str) +
+        " Rarity: " + df["rarity"].astype(str) +
+        " Effect: " + df["effect"].astype(str) +
+        " Quest: " + df["quest"].astype(str) +
+        " Location: " + df["location"].astype(str) +
+        " DLC: " + df["dlc"].astype(str) +
+        " Weight: " + df["weight"].astype(str) +
+        " Value: " + df["value"].astype(str) +
+        " Tags: " + df["tags"].astype(str)
+        )
     item_embeddings = model.encode(item_texts.tolist())
 
     @app.route("/")
@@ -52,7 +56,22 @@ def create_app(config=None) -> Flask:
 
         df['score'] = scores
         results = df.sort_values('score', ascending=False).head(5)
-        return jsonify(results[["item_name", "category", "type", "effect", "quest", "location", "tags", "score"]].to_dict(orient="records"))
+        return jsonify(results[[
+            "item_id",
+            "item_name",
+            "category",
+            "type",
+            "rarity",
+            "effect",
+            "quest",
+            "location",
+            "dlc",
+            "weight",
+            "value",
+            "image",
+            "tags",
+            "score"
+        ]].to_dict(orient="records"))
     
     if config:
         app.config.from_object(get_config_by_name(config))

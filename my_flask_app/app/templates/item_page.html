@@ -11,18 +11,25 @@
         <div class="wrapper">
             <div class="menu">
                 <main>
-                    <class="search_box">
+                    <div class="search-box">
                         <input 
-                        type ="text"
-                        id="searchInput"
-                        placeholder="Search for an item, effect, or weapon type..."
+                            type="text"
+                            id="searchInput"
+                            placeholder="Search for an item, effect, or weapon type..."
                         />
-                        <button onclick="searchItems()">Search</button>
+                        <button id="searchButton" onclick="searchItems()">Search</button>
                     </div>
 
+                    <div class="recommendation-box">
+                        <button onclick="recommendBuild('dragon hunter')">Dragon Hunter</button>
+                        <button onclick="recommendBuild('stealth assassin')">Stealth Assassin</button>
+                        <button onclick="recommendBuild('mage')">Mage</button>
+                        <button onclick="recommendBuild('anti undead')">Anti-Undead</button>
+                        <button onclick="recommendBuild('heavy warrior')">Heavy Warrior</button>
+                    </div>
+                    
                     <div id="searchResults"></div>
 
-                    </class>
                     <h1 class="items-h1">Items</h1>
 
                     <div class="item-card">

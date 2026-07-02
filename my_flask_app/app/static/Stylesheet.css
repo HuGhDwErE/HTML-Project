@@ -435,3 +435,12 @@ background-position: center;
     font-family: "Skyrim_Font", serif;
     cursor: pointer;
 }
+
+.item-image {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    display:block;
+    margin: 0 auto 12px auto;
+    border-radius: 8px;
+}
