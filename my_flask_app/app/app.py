@@ -1,3 +1,9 @@
+from pickle import GET
+
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask import session
+from app.db.db import db
+from app.db.models import User
 from flask import Flask, jsonify, render_template, request
 from app.config.config import get_config_by_name
 from app.initialize_functions import initialize_route, initialize_db, initialize_swagger
@@ -8,7 +14,50 @@ from sklearn.metrics.pairwise import cosine_similarity
 def create_app(config=None) -> Flask:
 
     app = Flask(__name__)
-
+    @app.route("/register", methods=["POST"])
+    def register():
+        data = request.get_json()
+        
+        username = data.get("username", "").strip()
+        password = data.get("password", "").strip()
+        
+        if not username or not password:
+            return jsonify({"error": "Username and password are required"}), 400
+        
+        existing_user = User.query.filter_by(username=username).first()
+        if existing_user:
+            return jsonify({"error": "Username already exists"}), 400
+        
+        password_hash = generate_password_hash(password)
+        
+        new_user = User(username=username, password_hash=password_hash)
+        db.session.add(new_user)
+        db.session.commit()
+        
+        return jsonify({"message": "User registered successfully"}), 201
+    
+    @app.route("/login", methods=[GET, "POST"])
+    def login():
+        if request.method == "GET":
+            return render_template("login_page,html")
+        
+        data = request.get_json()
+        
+        username = data.get("username", "").strip()
+        password = data.get("password", "")
+        
+        user = user.query.filter_by(username=username).first()
+        
+        if user and check_password_hash(user.password_hash, password):
+            session["user_id"] = user.id
+            session["username"] = user.username
+            
+            return jsonify({
+                "message": "Login Successful",
+                "username": user.username,
+            })
+        
+        return jsonify({"error": "Incorrect username or password"}), 401
     df = pd.read_csv("app/data/skyrim_items.csv")
     df.columns = df.columns.str.strip()
 
@@ -46,10 +95,6 @@ def create_app(config=None) -> Flask:
     @app.route("/questlines")
     def questlines():
         return render_template("questline_page.html")
-
-    @app.route("/login")
-    def login():
-        return render_template("login_page.html")
    
     @app.route("/search")
     def search():
