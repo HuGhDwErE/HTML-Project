@@ -1,11 +1,16 @@
 import os
+from datetime import timedelta
 
 class BaseConfig:
     """Base configuration."""
     DEBUG = False
     TESTING = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = os.getenv("SECRET_KEY", "development-only-key")
+    SESSION_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_SAMESITE = 'Lax'
+    PERMANENT_SESSION_LIFETIME = timedelta(days=30)
+    MAX_CONTENT_LENGTH = 1024 * 1024
+    SECRET_KEY = os.getenv("SECRET_KEY")
 
 class DevelopmentConfig(BaseConfig):
     """Development configuration."""
@@ -16,12 +21,13 @@ class TestingConfig(BaseConfig):
     """Testing configuration."""
     DEBUG = True
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///testing.db'
+    SQLALCHEMY_DATABASE_URI = 'sqlite://'
 
 class ProductionConfig(BaseConfig):
     """Production configuration."""
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///production.db'
+    SESSION_COOKIE_SECURE = True
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///production.db')
 
 
 def get_config_by_name(config_name):

@@ -34,156 +34,6 @@ if (loginbutton) {
     loginbutton.addEventListener("click", handleLoginClick);
 }
 
-// collected item buttons
-const collectedButtons = document.querySelectorAll(".collected-button");
-
-collectedButtons.forEach(button => {
-    const itemName = button.dataset.item;
-    const savedState = localStorage.getItem(itemName);
-
-    if (savedState === "collected") {
-        button.classList.add("collected");
-        button.classList.remove("not-collected");
-        button.textContent = "Collected ";
-    } else {
-        button.classList.add("not-collected");
-        button.classList.remove("collected");
-        button.textContent = "Not Collected ";
-    }
-
-    button.addEventListener("click", () => {
-        if (button.classList.contains("not-collected")) {
-            button.classList.remove("not-collected");
-            button.classList.add("collected");
-            button.textContent = "Collected ";
-            localStorage.setItem(itemName, "collected");
-        } else {
-            button.classList.remove("collected");
-            button.classList.add("not-collected");
-            button.textContent = "Not Collected ";
-            localStorage.setItem(itemName, "not-collected");
-        }
-    });
-});
-
-// questline buttons
-const questButtons = document.querySelectorAll(".quest-complete-button");
-
-questButtons.forEach(button => {
-    const questName = button.dataset.quest;
-    const itemName = button.dataset.item;
-    const savedQuestState = localStorage.getItem(questName);
-
-    if (savedQuestState === "completed") {
-        button.classList.add("completed");
-        button.textContent = "Completed ";
-    } else {
-        button.textContent = "Not Completed ";
-    }
-
-    button.addEventListener("click", () => {
-        if (button.classList.contains("completed")) {
-            button.classList.remove("completed");
-            button.textContent = "Not Completed ";
-            localStorage.setItem(questName, "not-completed");
-            localStorage.setItem(itemName, "not-collected");
-        } else {
-            button.classList.add("completed");
-            button.textContent = "Completed ";
-            localStorage.setItem(questName, "completed");
-            localStorage.setItem(itemName, "collected");
-        }
-    });
-});
-
-// login system
-const loginForm = document.getElementById("login-form");
-
-if (loginForm) {
-    const usernameInput = document.getElementById("username");
-    const passwordInput = document.getElementById("password");
-    const rememberMeInput = document.getElementById("rememberMe");
-    const loginMessage = document.getElementById("login-message");
-
-    // fill in remembered username if it exists
-    const rememberedUsername = localStorage.getItem("rememberedUsername");
-    if (rememberedUsername) {
-        usernameInput.value = rememberedUsername;
-        rememberMeInput.checked = true;
-    }
-
-    loginForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        const username = usernameInput.value.trim();
-        const password = passwordInput.value.trim();
-
-        if (username === "" || password === "") {
-            loginMessage.textContent = "Please enter a username and password.";
-            return;
-        }
-
-        const savedUsername = localStorage.getItem("accountUsername");
-        const savedPassword = localStorage.getItem("accountPassword");
-
-        // if no account exists yet, create one
-        if (!savedUsername && !savedPassword) {
-            localStorage.setItem("accountUsername", username);
-            localStorage.setItem("accountPassword", password);
-            localStorage.setItem("loggedInUser", username);
-            localStorage.setItem("isLoggedIn", "true");
-
-            if (rememberMeInput.checked) {
-                localStorage.setItem("rememberedUsername", username);
-            } else {
-                localStorage.removeItem("rememberedUsername");
-            }
-
-            loginMessage.textContent = "Account created successfully!";
-            window.location.href = "Html_project.html";
-            return;
-        }
-
-        // if account exists, check login details
-        if (username === savedUsername && password === savedPassword) {
-            localStorage.setItem("loggedInUser", username);
-            localStorage.setItem("isLoggedIn", "true");
-
-            if (rememberMeInput.checked) {
-                localStorage.setItem("rememberedUsername", username);
-            } else {
-                localStorage.removeItem("rememberedUsername");
-            }
-
-            loginMessage.textContent = "Login successful!";
-            window.location.href = "Html_project.html";
-        } else {
-            loginMessage.textContent = "Incorrect username or password.";
-        }
-    });
-}
-
-// logout button
-const logoutbutton = document.getElementById("logoutbutton");
-if (logoutbutton) {
-    logoutbutton.addEventListener("click", () => {
-        localStorage.removeItem("isLoggedIn");
-        localStorage.removeItem("loggedInUser");
-        window.location.href = "login_page.html";
-    });
-}
-
-// welcome text
-const welcomeText = document.getElementById("welcome-text");
-if (welcomeText) {
-    const loggedInUser = localStorage.getItem("loggedInUser");
-    if (loggedInUser) {
-        welcomeText.textContent = "Welcome, " + loggedInUser + "!";
-    } else {
-        welcomeText.textContent = "You are not logged in.";
-    }
-}
-
 async function searchItems() {
     const query = document.getElementById("searchInput").value;
 
@@ -222,3 +72,120 @@ function recommendBuild(buildType) {
         searchItems();
     }
 }
+// Remove credentials left by the old browser-only login.
+['accountUsername', 'accountPassword', 'loggedInUser', 'isLoggedIn'].forEach(key => localStorage.removeItem(key));
+
+async function authRequest(url, data, token) {
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', 'X-CSRF-Token': token},
+        body: JSON.stringify(data)
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || 'Request failed. Please try again.');
+    return result;
+}
+
+const loginForm = document.getElementById('login-form');
+if (loginForm) {
+    loginForm.addEventListener('submit', async event => {
+        event.preventDefault();
+        const button = loginForm.querySelector('button[type="submit"]');
+        const message = document.getElementById('login-message');
+        button.disabled = true;
+        try {
+            await authRequest(loginForm.dataset.endpoint, {
+                username: document.getElementById('username').value.trim(),
+                password: document.getElementById('password').value,
+                confirm_password: document.getElementById('confirm-password')?.value,
+                remember: document.getElementById('rememberMe').checked
+            }, document.getElementById('csrf-token').value);
+            window.location.href = '/';
+        } catch (error) {
+            message.textContent = error.message;
+            button.disabled = false;
+        }
+    });
+}
+
+async function initializeAccount() {
+    try {
+        const response = await fetch('/api/session');
+        if (!response.ok) throw new Error('Unable to load your account.');
+        const account = await response.json();
+        const welcome = document.getElementById('welcome-text');
+        if (welcome) welcome.textContent = account.user ? `Welcome, ${account.user.username}!` : 'Log in to save your progress.';
+        const login = document.getElementById('loginbutton');
+        const logout = document.getElementById('logoutbutton');
+        if (login) login.hidden = Boolean(account.user);
+        if (logout) {
+            logout.hidden = !account.user;
+            logout.addEventListener('click', async () => {
+                try {
+                    await authRequest('/logout', {}, account.csrf_token);
+                    window.location.href = '/login';
+                } catch (error) { alert(error.message); }
+            });
+        }
+        const buttons = document.querySelectorAll('.collected-button, .quest-complete-button');
+        const storageButtons = document.querySelectorAll('.storage-button');
+        let progress = {};
+        if (account.user && (buttons.length || storageButtons.length)) {
+            const saved = await fetch('/api/progress');
+            if (!saved.ok) throw new Error('Unable to load saved progress. Refresh to try again.');
+            progress = await saved.json();
+        }
+        function renderProgress() {
+            buttons.forEach(button => {
+                const quest = button.classList.contains('quest-complete-button');
+                const key = quest ? button.dataset.quest : button.dataset.item;
+                const active = progress[key] === (quest ? 'completed' : 'collected');
+                button.classList.toggle(quest ? 'completed' : 'collected', active);
+                if (!quest) button.classList.toggle('not-collected', !active);
+                button.textContent = quest ? (active ? 'Completed' : 'Not Completed') : (active ? 'Collected' : 'Not Collected');
+            });
+        }
+        document.querySelectorAll('.storage-location').forEach(label => {
+            const name = label.closest('.item-card').querySelector('.item-name').textContent.trim();
+            label.textContent = progress[`storage:${name}`] || 'Not stored';
+        });
+        storageButtons.forEach(button => {
+            button.addEventListener('click', async () => {
+                if (!account.user) { window.location.href = '/login'; return; }
+                const card = button.closest('.item-card');
+                const key = `storage:${card.querySelector('.item-name').textContent.trim()}`;
+                const location = button.dataset.location;
+                storageButtons.forEach(item => { item.disabled = true; });
+                try {
+                    await authRequest('/api/progress', {[key]: location}, account.csrf_token);
+                    card.querySelector('.storage-location').textContent = location;
+                } catch (error) { alert(error.message); }
+                finally { storageButtons.forEach(item => { item.disabled = false; }); }
+            });
+        });
+        renderProgress();
+        buttons.forEach(button => {
+            button.addEventListener('click', async () => {
+                if (!account.user) { window.location.href = '/login'; return; }
+                const quest = button.classList.contains('quest-complete-button');
+                const key = quest ? button.dataset.quest : button.dataset.item;
+                const active = progress[key] === (quest ? 'completed' : 'collected');
+                const changes = {[key]: quest ? (active ? 'not-completed' : 'completed') : (active ? 'not-collected' : 'collected')};
+                if (quest && button.dataset.item) changes[button.dataset.item] = active ? 'not-collected' : 'collected';
+                buttons.forEach(item => { item.disabled = true; });
+                try {
+                    await authRequest('/api/progress', changes, account.csrf_token);
+                    Object.assign(progress, changes);
+                    renderProgress();
+                } catch (error) { alert(error.message); }
+                finally { buttons.forEach(item => { item.disabled = false; }); }
+            });
+        });
+    } catch (error) {
+        document.querySelectorAll('.collected-button, .quest-complete-button, .storage-button').forEach(button => { button.disabled = true; });
+        const welcome = document.getElementById('welcome-text');
+        if (welcome) welcome.textContent = error.message;
+        else if (!loginForm) alert(error.message);
+    }
+}
+initializeAccount();

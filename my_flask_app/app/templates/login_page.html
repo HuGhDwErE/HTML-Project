@@ -1,40 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <!--Linking everything for the Login page-->
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-        <link rel="stylesheet" href="{{ url_for('static', filename='Stylesheet.css') }}" />
-        <script defer src="{{ url_for('static', filename='ButtonWorker.js') }}"></script>
-        <link rel="icon" type="image/x-icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcgzo1WK8N1PcYh0JstIFeZxyuiH1sX6LHug&s" />
-        <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-        <title>Login</title>
-    </head>
-    <body id="body">
-        <div class="wrapper">
-            <form id="login-form">
-                <h1>Login</h1>
-
-                <div class="input-box">
-                    <input type="text" id="username" placeholder="Username" required>
-                    <i class='bx bxs-user'></i>
-                </div>
-
-                <div class="input-box">
-                    <input type="password" id="password" placeholder="Password" required>
-                    <i class='bx bxs-lock-alt'></i>
-                </div>
-
-                <div class="remember-forgot">
-                    <label><input type="checkbox" id="rememberMe">Remember me</label>
-                </div>
-
-                <button type="submit" class="btn">Login / Sign Up</button>
-
-                <div class="register-link">
-                    <p id="login-message">Create an account or log into an existing one.</p>
-                </div>
-            </form>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Stylesheet.css') }}">
+    <script defer src="{{ url_for('static', filename='ButtonWorker.js') }}"></script>
+    <title>{{ 'Sign up' if registering else 'Login' }}</title>
+</head>
+<body id="body">
+<div class="wrapper">
+    <form id="login-form" data-endpoint="{{ url_for('register' if registering else 'login') }}">
+        <h1>{{ 'Create account' if registering else 'Login' }}</h1>
+        <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
+        <div class="input-box"><input aria-label="Username" type="text" id="username" placeholder="Username" autocomplete="username" minlength="3" maxlength="80" required></div>
+        <div class="input-box"><input aria-label="Password" type="password" id="password" placeholder="Password" autocomplete="{{ 'new-password' if registering else 'current-password' }}" {% if registering %}minlength="8"{% endif %} maxlength="128" required></div>
+        {% if registering %}<div class="input-box"><input aria-label="Confirm password" type="password" id="confirm-password" placeholder="Confirm password" autocomplete="new-password" minlength="8" maxlength="128" required></div>{% endif %}
+        <div class="remember-forgot"><label><input type="checkbox" id="rememberMe">Remember me for 30 days</label></div>
+        <button type="submit" class="btn">{{ 'Sign up' if registering else 'Login' }}</button>
+        <div class="register-link">
+            <p id="login-message" role="status" aria-live="polite"></p>
+            <p><a href="{{ url_for('login' if registering else 'register') }}">{{ 'Already have an account? Log in' if registering else 'Create an account' }}</a></p>
+            <p><a href="{{ url_for('home') }}">Back to home</a></p>
         </div>
-    </body>
+    </form>
+</div>
+</body>
 </html>

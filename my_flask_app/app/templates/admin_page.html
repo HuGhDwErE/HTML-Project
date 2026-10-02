@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account administration</title>
+    <style>
+        body { font-family: system-ui, sans-serif; background: #171923; color: #eee; max-width: 900px; margin: 3rem auto; padding: 1rem; }
+        a { color: #a9c9ff; } table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 1rem; text-align: left; border-bottom: 1px solid #454854; }
+        button { padding: .5rem 1rem; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Account administration</h1>
+    <p>Signed in as {{ current_user.username }}. <a href="{{ url_for('home') }}">Back to home</a></p>
+    <p>Disabled users lose access on their next request and cannot log in until enabled.</p>
+    <table>
+        <thead><tr><th>ID</th><th>Username</th><th>Role</th><th>Status</th><th>Action</th></tr></thead>
+        <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td><td>{{ user.username }}</td>
+            <td>{{ 'Administrator' if user.is_admin else 'User' }}</td>
+            <td>{{ 'Active' if user.is_active else 'Disabled' }}</td>
+            <td>{% if not user.is_admin %}
+                <form method="post" action="{{ url_for('admin_user_status', user_id=user.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    <input type="hidden" name="active" value="{{ 'false' if user.is_active else 'true' }}">
+                    <button type="submit">{{ 'Disable' if user.is_active else 'Enable' }}</button>
+                </form>
+            {% else %}Protected{% endif %}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

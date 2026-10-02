@@ -26,6 +26,9 @@
                     <button id="loginbutton">Login/Signup</button>
                     <button id="logoutbutton">Logout</button>
                     <p id="welcome-text"></p>
+                    {% if current_user and current_user.is_admin %}
+                    <p><a href="{{ url_for('admin_dashboard') }}">Manage accounts</a></p>
+                    {% endif %}
                 </main>        
             </div>
         </div>
