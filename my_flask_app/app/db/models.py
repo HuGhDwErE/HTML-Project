@@ -1,4 +1,5 @@
 from app.db.db import db
+from datetime import datetime, timezone
 
 class User(db.Model):
     __tablename__ = "users"
@@ -17,3 +18,13 @@ class Progress(db.Model):
     key = db.Column(db.String(200), nullable=False)
     value = db.Column(db.String(30), nullable=False)
     __table_args__ = (db.UniqueConstraint("user_id", "key"),)
+
+
+class Appeal(db.Model):
+    __tablename__ = 'appeals'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), unique=True, nullable=False)
+    message = db.Column(db.Text, nullable=False)
+    status = db.Column(db.String(20), nullable=False, default='pending')
+    submitted_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
+    user = db.relationship(User)

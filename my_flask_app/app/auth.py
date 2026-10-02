@@ -24,6 +24,10 @@ def initialize_auth(app):
     def load_user_and_check_csrf():
         g.user = db.session.get(User, session['user_id']) if session.get('user_id') else None
         if g.user is not None and not g.user.is_active:
+            disabled_id = g.user.id
+            session.clear()
+            session['appeal_user_id'] = disabled_id
+            session['disabled_notice'] = True
             g.user = None
         if session.get('user_id') and g.user is None:
             session.clear()
@@ -36,11 +40,12 @@ def initialize_auth(app):
 
     @app.context_processor
     def auth_context():
-        return dict(current_user=g.user, csrf_token=session['csrf_token'])
+        return dict(current_user=g.user, csrf_token=session['csrf_token'], disabled_notice=session.get('disabled_notice', False))
 
     @app.get('/api/session')
     def current_session():
         return jsonify(user={'username': g.user.username, 'is_admin': g.user.is_admin} if g.user else None,
+                       disabled=session.get('disabled_notice', False),
                        csrf_token=session['csrf_token'])
 
     def credentials():
@@ -89,8 +94,14 @@ def initialize_auth(app):
             return jsonify(error='Incorrect username or password.'), 401
         user = User.query.filter_by(username=username).first()
         valid = check_password_hash(user.password_hash if user else dummy_hash, password)
-        if not user or not valid or not user.is_active:
+        if not user or not valid:
             return jsonify(error='Incorrect username or password.'), 401
+        if not user.is_active:
+            session.clear()
+            session['appeal_user_id'] = user.id
+            session['disabled_notice'] = True
+            session['csrf_token'] = secrets.token_urlsafe(32)
+            return jsonify(error='An administrator has disabled your account. You can submit an unban appeal.', appeal_url=url_for('appeals')), 401
         session.clear()
         session['user_id'] = user.id
         session['csrf_token'] = secrets.token_urlsafe(32)

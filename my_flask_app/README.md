@@ -74,3 +74,17 @@ Account records are in the users table in instance/development.db. Open this
 SQLite file in a database viewer to inspect records. The password_hash column
 contains salted scrypt hashes, not readable passwords. Keep the database private;
 hashing passwords does not encrypt usernames or other database data.
+
+## Unban appeals
+
+Disabled users see an administrator-disabled message after entering their correct
+login credentials, with a link to `/appeals`. They can also reach that page after
+an existing session is disabled. This limited session allows appeal access only;
+it does not grant tracker or administrator access.
+
+Users can submit a 10-2000 character explanation and view its status. One pending
+appeal is allowed per account. Declined appeals can be resubmitted. The administrator
+reviews appeals on `/admin`; approval re-enables the account, while declining an
+appeal leaves it disabled. Users must log in again after approval. Enabling an
+account directly also approves its pending appeal. Appeals are saved in the
+`appeals` database table and shown only to their author and administrators.

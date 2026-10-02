@@ -34,5 +34,20 @@
         {% endfor %}
         </tbody>
     </table>
+    <h2>Unban appeals</h2>
+    {% for appeal in appeals %}
+    <article>
+        <h3>{{ appeal.user.username }} - {{ appeal.status }}</h3>
+        <p>Submitted: {{ appeal.submitted_at.strftime('%Y-%m-%d %H:%M') }} UTC</p>
+        <p style="white-space: pre-wrap; overflow-wrap: anywhere;">{{ appeal.message }}</p>
+        {% if appeal.status == 'pending' %}
+        <form method="post" action="{{ url_for('review_appeal', appeal_id=appeal.id) }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <button name="decision" value="approved">Approve and re-enable account</button>
+            <button name="decision" value="rejected">Decline appeal</button>
+        </form>
+        {% endif %}
+    </article>
+    {% else %}<p>No appeals have been submitted.</p>{% endfor %}
 </body>
 </html>

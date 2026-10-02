@@ -5,6 +5,7 @@ from app.config.config import get_config_by_name
 from app.initialize_functions import initialize_route, initialize_db, initialize_swagger
 from app.auth import initialize_auth, login_required
 from app.admin import initialize_admin
+from app.appeals import initialize_appeals
 
 
 def create_app(config=None) -> Flask:
@@ -26,6 +27,7 @@ def create_app(config=None) -> Flask:
     initialize_db(app)
     initialize_auth(app)
     initialize_admin(app)
+    initialize_appeals(app)
     search_data = None
 
     def load_search():

@@ -3,7 +3,7 @@ from functools import wraps
 from flask import abort, g, redirect, render_template, request, url_for
 from app.auth import login_required
 from app.db.db import db
-from app.db.models import User
+from app.db.models import User, Appeal
 
 
 def admin_required(view):
@@ -20,7 +20,8 @@ def initialize_admin(app):
     @app.get('/admin')
     @admin_required
     def admin_dashboard():
-        return render_template('admin_page.html', users=User.query.order_by(User.id).all())
+        return render_template('admin_page.html', users=User.query.order_by(User.id).all(),
+                               appeals=Appeal.query.order_by(Appeal.submitted_at.desc()).all())
 
     @app.post('/admin/users/<int:user_id>/status')
     @admin_required
@@ -31,6 +32,21 @@ def initialize_admin(app):
         if request.form.get('active') not in {'true', 'false'}:
             abort(400)
         user.is_active = request.form['active'] == 'true'
+        if user.is_active:
+            Appeal.query.filter_by(user_id=user.id, status='pending').update({'status': 'approved'})
+        db.session.commit()
+        return redirect(url_for('admin_dashboard'))
+
+    @app.post('/admin/appeals/<int:appeal_id>/review')
+    @admin_required
+    def review_appeal(appeal_id):
+        appeal = db.get_or_404(Appeal, appeal_id)
+        decision = request.form.get('decision')
+        if decision not in {'approved', 'rejected'} or appeal.status != 'pending':
+            abort(400)
+        if decision == 'approved':
+            appeal.user.is_active = True
+        appeal.status = decision
         db.session.commit()
         return redirect(url_for('admin_dashboard'))
 

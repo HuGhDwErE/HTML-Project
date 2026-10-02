@@ -82,7 +82,11 @@ async function authRequest(url, data, token) {
         body: JSON.stringify(data)
     });
     const result = await response.json();
-    if (!response.ok) throw new Error(result.error || 'Request failed. Please try again.');
+    if (!response.ok) {
+        const error = new Error(result.error || 'Request failed. Please try again.');
+        error.appealUrl = result.appeal_url;
+        throw error;
+    }
     return result;
 }
 
@@ -103,6 +107,16 @@ if (loginForm) {
             window.location.href = '/';
         } catch (error) {
             message.textContent = error.message;
+            if (error.appealUrl) {
+                const link = document.createElement('a');
+                link.href = error.appealUrl;
+                link.textContent = ' Submit an unban appeal';
+                message.appendChild(link);
+                try {
+                    const refreshed = await fetch('/api/session');
+                    if (refreshed.ok) document.getElementById('csrf-token').value = (await refreshed.json()).csrf_token;
+                } catch { /* The appeal link remains available if the refresh fails. */ }
+            }
             button.disabled = false;
         }
     });
@@ -114,7 +128,15 @@ async function initializeAccount() {
         if (!response.ok) throw new Error('Unable to load your account.');
         const account = await response.json();
         const welcome = document.getElementById('welcome-text');
-        if (welcome) welcome.textContent = account.user ? `Welcome, ${account.user.username}!` : 'Log in to save your progress.';
+        if (welcome) {
+            welcome.textContent = account.disabled ? 'An administrator has disabled your account. ' : account.user ? `Welcome, ${account.user.username}!` : 'Log in to save your progress.';
+            if (account.disabled) {
+                const link = document.createElement('a');
+                link.href = '/appeals';
+                link.textContent = 'Submit an unban appeal';
+                welcome.appendChild(link);
+            }
+        }
         const login = document.getElementById('loginbutton');
         const logout = document.getElementById('logoutbutton');
         if (login) login.hidden = Boolean(account.user);

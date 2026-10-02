@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unban appeals</title>
+    <style>
+        body { font-family: system-ui, sans-serif; background: #171923; color: #eee; max-width: 700px; margin: 3rem auto; padding: 1rem; }
+        a { color: #a9c9ff; } textarea { width: 100%; box-sizing: border-box; padding: 1rem; }
+        button { padding: .75rem 1rem; margin-top: 1rem; cursor: pointer; }
+        .message { white-space: pre-wrap; overflow-wrap: anywhere; }
+    </style>
+</head>
+<body>
+    <h1>Unban appeals</h1>
+    <p>Account: {{ appeal_user.username }}</p>
+    {% if appeal_user.is_active %}
+        <p>Your account is enabled. You can <a href="{{ url_for('login') }}">log in again</a>.</p>
+    {% else %}
+        <p>An administrator has disabled your account. Explain why you would like your account re-enabled.</p>
+    {% endif %}
+    {% if error %}<p role="alert">{{ error }}</p>{% endif %}
+    {% if appeal %}
+        <h2>Your appeal: {{ appeal.status }}</h2>
+        <p class="message">{{ appeal.message }}</p>
+        {% if appeal.status == 'pending' %}<p>Your appeal has been sent to the administrator for review.</p>{% endif %}
+        {% if appeal.status == 'rejected' %}<p>The administrator declined this appeal. You may submit a new appeal below.</p>{% endif %}
+    {% endif %}
+    {% if not appeal_user.is_active and (not appeal or appeal.status != 'pending') %}
+    <form method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <label for="message">Reason for your appeal (10-2000 characters)</label>
+        <textarea id="message" name="message" rows="7" minlength="10" maxlength="2000" required>{{ request.form.get('message', '') }}</textarea>
+        <button type="submit">Send appeal</button>
+    </form>
+    {% endif %}
+    <p><a href="{{ url_for('home') }}">Home</a> | <a href="{{ url_for('login') }}">Login</a></p>
+</body>
+</html>
